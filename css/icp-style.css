@@ -1,0 +1,21 @@
+#icp-crop-popup{
+  z-index:999
+}
+.media-modal-backdrop-behind-popup{
+  z-index:995
+}
+.behindPopup{
+  z-index:990
+}
+#icp-crop-area {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#icp-crop-image {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  padding: 5px;
+  background: #fff;
+}
