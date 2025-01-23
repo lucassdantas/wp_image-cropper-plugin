@@ -14,7 +14,7 @@ define( 'ICP_PLUGIN_PATH', '/wp-content/plugins/image-cropper-plugin/');
 require_once plugin_dir_path(__FILE__) . 'functions/icp_add_crop_button.php';
 require_once plugin_dir_path(__FILE__) . 'functions/icp_enqueue_scripts.php';
 require_once plugin_dir_path(__FILE__) . 'functions/icp_add_crop_popup.php';
-require_once plugin_dir_path(__FILE__) . 'functions/icp_crop_image.php';
+require_once plugin_dir_path(__FILE__) . 'functions/icp_save_cropped_image.php';
 
 
 

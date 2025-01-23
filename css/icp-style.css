@@ -1,11 +1,11 @@
 #icp-crop-popup{
-  z-index:999
+  z-index:999;
 }
 .media-modal-backdrop-behind-popup{
-  z-index:995
+  z-index:995;
 }
 .behindPopup{
-  z-index:990
+  z-index:990;
 }
 #icp-crop-area {
   text-align: center;
