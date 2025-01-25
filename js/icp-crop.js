@@ -1,12 +1,17 @@
 jQuery(document).ready(function ($) {
   let cropper;
-
+  const closePopup = () => {
+    $('#icp-crop-popup').dialog('close');
+    $('.media-modal').removeClass('behindPopup');
+    $('.media-modal-backdrop').removeClass('media-modal-backdrop-behind-popup');
+    if (cropper) cropper.destroy();
+  }
   // Busca as dimensões de recorte salvas no WordPress
   const cropWidth = parseInt(icpCropSettings.width, 10) || 800;
   const cropHeight = parseInt(icpCropSettings.height, 10) || 600;
 
   $(document).on('click', '.icp-crop-button', function () {
-    let imageUrl = document.querySelector('.details-image').src;
+    let imageUrl = document.querySelector('.attachment-details-copy-link').value;
     const baseUrl = 'wp-content';
     imageUrl = location.origin + '/teste/wp-content' + (imageUrl.split(baseUrl)[1]);
 
@@ -47,10 +52,7 @@ jQuery(document).ready(function ($) {
                 });
 
                 // Remove o cropper e fecha o popup
-                cropper.destroy();
-                $('#icp-crop-popup').dialog('close');
-                $('.media-modal').removeClass('behindPopup');
-                $('.media-modal-backdrop').removeClass('media-modal-backdrop-behind-popup');
+                closePopup()
               }
             },
           },
@@ -58,9 +60,7 @@ jQuery(document).ready(function ($) {
             text: 'Cancelar',
             class: 'button',
             click: function () {
-              $('.media-modal').removeClass('behindPopup');
-              $('.media-modal-backdrop').removeClass('media-modal-backdrop-behind-popup');
-              if (cropper) cropper.destroy();
+             closePopup()
               $(this).dialog('close');
             },
           },
@@ -77,6 +77,10 @@ jQuery(document).ready(function ($) {
 
           const dialogHeight = Math.min($(window).height() * 0.9, 1300);
           $(this).dialog('option', 'height', dialogHeight);
+        },
+        close: function () {
+          closePopup()
+          $(this).dialog('close');
         },
       });
     } else {

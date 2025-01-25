@@ -6,7 +6,11 @@ add_filter('big_image_size_threshold', '__return_false');
 add_filter('wp_generate_attachment_metadata', 'icp_resize_image_after_upload', 10, 2);
 
 function icp_resize_image_after_upload($metadata, $attachment_id) {
-    // Obtém o caminho completo da imagem original
+    $auto_resize = get_option('icp_auto_resize', 1); // Padrão: ativado
+    if (!$auto_resize) {
+        return $metadata;
+    }  
+  // Obtém o caminho completo da imagem original
     $file_path = get_attached_file($attachment_id);
 
     // Verifica se o arquivo existe
