@@ -1,59 +1,71 @@
 <?php
-add_filter('wp_handle_upload_prefilter', 'custom_upload_resize');
+// Desabilita o escalonamento automático de imagens grandes
+add_filter('big_image_size_threshold', '__return_false');
 
-function custom_upload_resize($file) {
-    // Verifica se o arquivo é uma imagem
-    $image_types = ['image/jpeg', 'image/png', 'image/gif'];
-    if (!in_array($file['type'], $image_types)) {
-        return $file; // Retorna sem alterações se não for uma imagem
+// Redimensiona a imagem original usando o wp_generate_attachment_metadata
+add_filter('wp_generate_attachment_metadata', 'icp_resize_image_after_upload', 10, 2);
+
+function icp_resize_image_after_upload($metadata, $attachment_id) {
+    // Obtém o caminho completo da imagem original
+    $file_path = get_attached_file($attachment_id);
+
+    // Verifica se o arquivo existe
+    if (!file_exists($file_path)) {
+        error_log('Arquivo não encontrado: ' . $file_path);
+        return $metadata;
     }
-
-    // Caminho temporário do arquivo
-    $file_path = $file['tmp_name'];
 
     // Obtém as dimensões da imagem
     $image_info = getimagesize($file_path);
     if (!$image_info) {
-        return $file; // Retorna sem alterações se não conseguir obter informações da imagem
+        error_log('Não foi possível obter informações da imagem: ' . $file_path);
+        return $metadata;
     }
 
     list($width, $height) = $image_info;
 
-    // Define o tamanho máximo permitido
-    $max_size = 1920;
+    // Define as dimensões máximas permitidas
+    $max_width = 1920;
+    $max_height = 1280;
 
     // Verifica se a imagem precisa ser redimensionada
-    if ($width > $max_size || $height > $max_size) {
+    if ($width > $max_width || $height > $max_height) {
         $ratio = $width / $height;
 
         // Calcula as novas dimensões mantendo a proporção
-        if ($width >= $height) {
-            $new_width = $max_size;
-            $new_height = intval($max_size / $ratio);
-        } else {
-            $new_height = $max_size;
-            $new_width = intval($max_size * $ratio);
+        if ($ratio > 1) { // Imagem mais larga que alta
+            $new_width = $max_width;
+            $new_height = intval($max_width / $ratio);
+        } else { // Imagem mais alta que larga
+            $new_height = $max_height;
+            $new_width = intval($max_height * $ratio);
         }
 
         // Carrega a imagem no editor do WordPress
         $image_editor = wp_get_image_editor($file_path);
         if (!is_wp_error($image_editor)) {
-            // Redimensiona e salva a imagem no caminho temporário
-            $image_editor->resize($new_width, $new_height, true); // O terceiro parâmetro (true) força o crop apenas se necessário
+            // Redimensiona e salva a imagem no caminho original
+            $image_editor->resize($new_width, $new_height, false);
             $result = $image_editor->save($file_path);
-            $result = $image_editor->generate_filename();
-            error_log(print_r($result, true));
-            error_log(print_r($file, true));
 
             // Verifica se a imagem foi salva com sucesso
-            if (is_wp_error($result)) error_log('Erro ao salvar a imagem redimensionada: ' . $result->get_error_message());
+            if (is_wp_error($result)) {
+                error_log('Erro ao salvar a imagem redimensionada: ' . $result->get_error_message());
+            } else {
+                // Atualiza as dimensões no metadata
+                $metadata['width'] = $new_width;
+                $metadata['height'] = $new_height;
+                error_log('Imagem redimensionada para ' . $new_width . 'x' . $new_height);
+            }
         } else {
             error_log('Erro ao carregar o editor de imagem: ' . $image_editor->get_error_message());
         }
     }
 
-    return $file;
+    return $metadata;
 }
+
+// Remove tamanhos intermediários
 add_filter('intermediate_image_sizes_advanced', function($sizes) {
-  return []; // Remove todos os tamanhos intermediários
+    return []; // Remove todos os tamanhos intermediários
 });
