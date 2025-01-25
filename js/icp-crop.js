@@ -1,6 +1,10 @@
 jQuery(document).ready(function ($) {
   let cropper;
 
+  // Busca as dimensões de recorte salvas no WordPress
+  const cropWidth = parseInt(icpCropSettings.width, 10) || 800;
+  const cropHeight = parseInt(icpCropSettings.height, 10) || 600;
+
   $(document).on('click', '.icp-crop-button', function () {
     let imageUrl = document.querySelector('.details-image').src;
     const baseUrl = 'wp-content';
@@ -23,8 +27,8 @@ jQuery(document).ready(function ($) {
             click: function () {
               if (cropper) {
                 const canvas = cropper.getCroppedCanvas({
-                  width: 800,
-                  height: 600,
+                  width: cropWidth,
+                  height: cropHeight,
                 });
                 const croppedImage = canvas.toDataURL('image/jpeg'); // Converte para base64
 
@@ -64,11 +68,11 @@ jQuery(document).ready(function ($) {
         open: function () {
           const image = document.getElementById('icp-crop-image');
           cropper = new Cropper(image, {
-            aspectRatio: 800 / 600,
+            aspectRatio: cropWidth / cropHeight,
             viewMode: 1,
             autoCropArea: 1,
-            minCropBoxWidth: 800,
-            minCropBoxHeight: 600,
+            minCropBoxWidth: cropWidth,
+            minCropBoxHeight: cropHeight,
           });
 
           const dialogHeight = Math.min($(window).height() * 0.9, 1300);

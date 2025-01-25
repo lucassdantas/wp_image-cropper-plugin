@@ -29,7 +29,7 @@ function icp_save_cropped_image() {
 
     // Cria um novo nome para o arquivo recortado
     $file_info = pathinfo($original_path);
-    $new_file_name = $file_info['filename'] . '-cropped.' . $file_info['extension'];
+    $new_file_name = $file_info['filename'] . '-recortado.' . $file_info['extension'];
     $new_file_path = $upload_dir['path'] . '/' . $new_file_name;
 
     // Salva o arquivo recortado

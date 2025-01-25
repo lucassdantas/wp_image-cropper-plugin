@@ -15,6 +15,8 @@ require_once plugin_dir_path(__FILE__) . 'functions/icp_add_crop_button.php';
 require_once plugin_dir_path(__FILE__) . 'functions/icp_enqueue_scripts.php';
 require_once plugin_dir_path(__FILE__) . 'functions/icp_add_crop_popup.php';
 require_once plugin_dir_path(__FILE__) . 'functions/icp_save_cropped_image.php';
+require_once plugin_dir_path(__FILE__) . 'functions/icp_admin_page.php';
+require_once plugin_dir_path(__FILE__) . 'functions/icp_resize_image_on_upload.php';
 
 
 
