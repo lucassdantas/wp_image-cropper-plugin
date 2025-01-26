@@ -1,9 +1,11 @@
 <?php
 /*
 Plugin Name: Image Cropper Plugin
-Description: Adiciona um botão para recortar imagens na biblioteca de mídia do WordPress.
+Description: Redimensionamento automático e opção de recortar imagens na biblioteca de mídia do WordPress.
 Version: 1.0
-Author: Seu Nome
+Author: WP SOS
+Author URI: https://soswordpress.com.br/
+Plugin URI: https://github.com/lucassdantas/wp_image-cropper-plugin
 */
 
 defined('ABSPATH') or die('you do not have permission to access that');
