@@ -24,7 +24,7 @@ jQuery(document).ready(function ($) {
         modal: true,
         width: '80%',
         height: 'auto',
-        maxHeight: 1300,
+        maxHeight: 1000,
         buttons: [
           {
             text: 'Recortar',

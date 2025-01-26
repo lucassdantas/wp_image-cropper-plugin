@@ -10,6 +10,7 @@
 #icp-crop-area {
   text-align: center;
   margin: 20px 0;
+  max-height:100%;
 }
 
 #icp-crop-image {
@@ -18,4 +19,7 @@
   border: 1px solid #ccc;
   padding: 5px;
   background: #fff;
+}
+.cropper-container{
+  max-height:100%!important;
 }
