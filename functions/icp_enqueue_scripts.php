@@ -10,7 +10,7 @@ function icp_enqueue_scripts($hook) {
         wp_enqueue_script('cropperjs', ICP_PLUGIN_PATH . 'js/lib/cropperjs.js', [], '', false);
 
         // Enfileira o script personalizado para o crop
-        wp_enqueue_script('icp-crop-script', ICP_PLUGIN_PATH . 'js/icp-crop.js', ['jquery', 'cropperjs'], '1.0', true);
+        wp_enqueue_script('icp-crop-script', ICP_PLUGIN_PATH . 'js/icp-crop.js', ['jquery', 'cropperjs'], '1.1', true);
         
         wp_localize_script('icp-crop-script', 'icpCropSettings', [
             'width' => get_option('icp_crop_width', 800),
