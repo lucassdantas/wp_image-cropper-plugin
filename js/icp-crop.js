@@ -12,8 +12,8 @@ jQuery(document).ready(function ($) {
 
   $(document).on('click', '.icp-crop-button', function () {
     let imageUrl = document.querySelector('.attachment-details-copy-link').value;
-    const baseUrl = 'wp-content';
-    imageUrl = location.origin + '/teste/wp-content' + (imageUrl.split(baseUrl)[1]); 
+    //const baseUrl = 'wp-content';
+    //imageUrl = location.origin + '/teste/wp-content' + (imageUrl.split(baseUrl)[1]); 
 
     if (imageUrl) {
       $('.media-modal').addClass('behindPopup');
