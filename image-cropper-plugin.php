@@ -2,7 +2,7 @@
 /*
 Plugin Name: Image Cropper Plugin
 Description: Redimensionamento automático e opção de recortar imagens na biblioteca de mídia do WordPress.
-Version: 1.0
+Version: 1.2
 Author: WP SOS
 Author URI: https://soswordpress.com.br/
 Plugin URI: https://github.com/lucassdantas/wp_image-cropper-plugin
