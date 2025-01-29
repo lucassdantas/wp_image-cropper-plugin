@@ -12,7 +12,9 @@ jQuery(document).ready(function ($) {
 
   $(document).on('click', '.icp-crop-button', function () {
     let imageUrl = document.querySelector('.attachment-details-copy-link').value;
-    
+    const baseUrl = 'wp-content';
+    imageUrl = location.origin + '/teste/wp-content' + (imageUrl.split(baseUrl)[1]); 
+
     if (imageUrl) {
       $('.media-modal').addClass('behindPopup');
       $('.media-modal-backdrop').addClass('media-modal-backdrop-behind-popup');
@@ -43,7 +45,9 @@ jQuery(document).ready(function ($) {
                 }, function (response) {
                   if (response.success) {
                     alert('A imagem foi recortada e salva com sucesso!');
-                    location.reload();
+                    console.log(wp.media)
+                    if (wp.media.frame.content.get().collection == undefined)  location.reload()
+                    if (wp.media) wp.media.frame.content.get().collection._requery(true);
                   } else {
                     alert('Erro ao salvar a imagem: ' + response.data);
                   }
